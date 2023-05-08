@@ -1,0 +1,36 @@
+.aboutContainer {
+    width: 750px;
+    margin: 92px auto;
+}
+
+.aboutContainer .aboutus .imgBox {
+    text-align: center;
+}
+
+.aboutus .imgBox img {
+    width: 160px;
+}
+.aboutus .intro {
+    margin-bottom: 60px;
+    font-size: 18px;
+    line-height: 2;
+}
+
+  
+  @media only screen and (max-width: 1050px) {
+    .aboutContainer {
+        margin-top: 132px;
+    }
+  }
+  
+  @media only screen and (max-width: 850px) {
+    .aboutContainer {
+        width: 600px;
+    }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .aboutContainer {
+        width: 94%;
+    }
+  }

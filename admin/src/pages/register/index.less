@@ -1,0 +1,45 @@
+.loginWrap {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    background-image: url(../../assets/lg_bg.png), url(../../assets/lg_bg.png);
+    background-position: -300px -600px, 800px 400px;
+    background-repeat: no-repeat;
+    background-size: 80%, 50%;
+    .tit {
+        font-size: 35px;
+        text-align: center;
+        padding-bottom: 20px;
+        margin-bottom: 36px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .formWrap {
+        margin-left: auto;
+        margin-right: auto;
+        width: 520px;
+        padding: 22px 0 20px;
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0,0,0,.1);
+        border-radius: 6px;
+    }
+}
+
+@media (max-width: 420px) {
+    .loginWrap {
+        background-position: -100px -200px, 230px 560px;
+        background-repeat: no-repeat;
+        background-size: 80%, 50%;
+        .tit {
+            font-size: 30px;
+        }
+        .formWrap {
+            width: 320px;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+    }
+}

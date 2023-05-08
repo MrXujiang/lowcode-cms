@@ -1,0 +1,100 @@
+extends ./layouts/default
+
+block title
+  title lowcode可视化低代码社区
+
+block style
+  include ./includes/index.css
+
+block content
+  .container
+    .section-banner
+      .bannerWrap
+        .bannerBox
+          each val in banner
+            a.banner-item(href=`${val.link}`, target='_blank')
+              .imgWrap
+                img(src=val.img)
+              .title #{val.title}
+        .slider-btn.left.js-left 	&larr;
+        .slider-btn.right.js-right &rarr;
+      .newsWrap 
+        .title 今日资讯
+        .news
+          each val in news
+            .new-item
+              .new-tit #{val.title}
+              .new-desc #{val.desc}
+        .controls
+          .btn.pri-bg-color.js_about_btn 我要投稿
+          .btn.pri-color.br-color.js_about_btn 产品自荐
+        
+    .section-module
+      .title 最佳实践
+        a.more.pri-color(href='/best-practice') 更多精彩 >
+      .section-list
+        each val in articles
+          a.section-item(href=`/best-practice/detail?fid=${val.fid}`, target='_blank')
+            .imgWrap
+              img(src=val.face || '/assets/default.png')
+            .info
+              .title #{val.title}
+              .desc #{val.desc}
+    .section-module
+      .title 产品推荐
+        a.more.pri-color(href='/product') 更多产品 >
+      .section-list
+        each val in products
+          a.section-item(href=`/product/detail?fid=${val.fid}`, target='_blank')
+            .imgWrap
+              img(src=val.face || '/assets/default.png')
+            .info
+              .title #{val.title}
+              .desc #{val.desc}
+    .section-module
+      .title 视频
+        a.more.pri-color(href='/video') 更多视频 >
+      .section-list
+        each val in videos
+          a.section-item(href=`/video/detail?fid=${val.fid}`, target='_blank')
+            .imgWrap
+              img(src=val.face || '/assets/default.png')
+            .info
+              .title #{val.title}
+    .section-module
+      .title 相关频道
+      .section-list
+        each val in cors
+          a.social-item(href=`${val.link}`, target='_blank', rel="nofollow")
+            .imgWrap
+              img(src=val.img)
+            .info
+              .title #{val.title}
+              .desc #{val.desc}
+  script.
+    // 业务逻辑
+    var mySiema = new Siema({
+      selector: '.bannerBox',
+      duration: 200,
+      easing: 'ease-out',
+      perPage: 1,
+      startIndex: 0,
+      draggable: true,
+      multipleDrag: true,
+      threshold: 20,
+      loop: true,
+      onInit: () => {},
+      onChange: () => {},
+    });
+
+    $('.js-left').click(function(){
+      mySiema.prev()
+    });
+
+    $('.js-right').click(function(){
+      mySiema.next()
+    });
+    $('.js_about_btn').click(function(){
+      window.location.href = '/about'
+    })
+

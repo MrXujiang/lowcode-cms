@@ -1,0 +1,290 @@
+/* 全局样式, 后期建议放到global.css中 */
+body {
+  margin: 0;
+  background-color: #f8f8f8;
+  position: relative;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: #999;
+}
+
+input {
+  height: 26px;
+  border: 1px solid #999;
+  outline: none;
+  border-radius: 0;
+}
+
+input:focus {
+  border-color: #2f54eb;
+}
+
+.pri-bg-color {
+  color: #fff;
+  background-color: #2f54eb;
+}
+
+.pri-color {
+  color: #2f54eb;
+}
+
+.br-color {
+  border: 1px solid #2f54eb;
+  border-radius: 2px;
+}
+
+/* header */
+.header {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 56px;
+  line-height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 100px;
+  background-color: #fff;
+  box-shadow: 0 1px 18px rgba(0,0,0,.1);
+}
+
+.header .logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.header .nav {
+  margin-left: 148px;
+  display: flex;
+}
+
+.header .nav .nav-item {
+  margin-right: 32px;
+}
+
+.header .nav .nav-item a {
+  font-size: 14px;
+  color: #000;
+}
+
+.header .other {
+  position: relative;
+  margin-left: auto;
+  display: flex;
+  align-items: flex-start;
+}
+
+.header .other .searchResult {
+  position: absolute;
+  padding: 10px;
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0,0,0,.1);
+  top: 100%;
+  display: none;
+  min-width: 196px;
+  max-width: 360px;
+  max-height: 460px;
+  overflow: auto;
+}
+
+.searchResult .search-item {
+  line-height: 1.2;
+}
+
+.searchResult .search-item a {
+  display: block;
+  font-size: 16px;
+  color: #2f54eb;
+  margin-bottom: 6px;
+}
+
+.searchResult .search-item div {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.header .other .join-btn {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.header .other .search {
+  margin-right: 60px;
+  width: 210px;
+  text-indent: 10px;
+}
+
+@media only screen and (max-width: 1290px) {
+  .header {
+    padding: 0 60px;
+  }
+  .header .nav {
+    margin-left: 80px;
+  }
+}
+
+@media only screen and (max-width: 1150px) {
+  .header {
+    padding: 0 36px;
+  }
+  .header .logo {
+    font-size: 18px;
+  }
+  .header .nav {
+    margin-left: 48px;
+  }
+  .header .other .search {
+    margin-right: 36px;
+    width: 168px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .header {
+    padding: 10px 18px;
+    height: auto;
+    line-height: 2;
+    flex-direction: column;
+  }
+  .header .nav {
+    margin-left: 0;
+    overflow: auto;
+  }
+  .header .other {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .header {
+    padding: 10px;
+  }
+  .header .nav .nav-item {
+    margin-right: 16px;
+  }
+}
+
+/* container */
+.container {
+  margin: 72px auto 40px;
+  max-width: 1150px;
+}
+
+/* footer */
+footer {
+  padding: 30px 100px 10px;
+  background-color: #f0f0f0;
+}
+
+footer .site-help {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.site-help .site-help-left, .site-help .site-help-right {
+  display: flex;
+}
+
+.site-help .site-help-left {
+  margin-right: 100px;
+}
+
+.site-help .site-item {
+  width: 240px;
+}
+
+.site-help .site-item img {
+  width: 108px;
+}
+
+.site-help .site-item .site-item-tit {
+  margin-bottom: 12px;
+}
+
+.site-help .site-help-left .site-item .site-item-link {
+  display: block;
+  line-height: 1.6;
+  font-size: 12px;
+}
+
+footer .copyright {
+  font-size: 12px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 1290px) {
+  .footer {
+    padding: 30px 48px 10px;
+  }
+  .site-help .site-item {
+    width: 200px;
+  }
+  .site-help .site-help-left {
+    margin-right: 80px;
+  }
+}
+
+@media only screen and (max-width: 1150px) {
+  .container {
+    max-width: 1000px;
+  }
+  .footer {
+    padding: 30px 40px 10px;
+  }
+  .site-help .site-item {
+    width: 190px;
+  }
+  .site-help .site-help-left {
+    margin-right: 62px;
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .container {
+    max-width: 960px;
+  }
+  .footer {
+    padding: 30px 30px 10px;
+  }
+  .site-help .site-item {
+    width: 180px;
+  }
+  .site-help .site-help-left {
+    margin-right: 30px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .container {
+    margin-top: 88px;
+    width: 100%;
+  }
+  .footer {
+    padding: 30px 20px 10px;
+  }
+  .site-help .site-item {
+    width: 150px;
+  }
+  .site-help .site-help-left {
+    display: none;
+  }
+  .site-help .site-help-right {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+  }
+  .site-help .site-help-right img {
+    width: 82px;
+  }
+}
+

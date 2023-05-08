@@ -1,0 +1,18 @@
+extends ./layouts/default
+
+block title
+  title 关于-LowCode低代码可视化社区
+
+block style
+  include ./includes/about.css
+
+block content
+  .aboutContainer
+    .aboutus 
+      .intro #{introductionInfo}
+      .imgBox
+        img(
+          src='http://cdn.dooring.cn/dr/lowcode.jpeg'
+        )
+      
+      

@@ -1,0 +1,184 @@
+doctype html
+html
+ head
+  meta(charset="utf-8")
+  meta(name='viewport', content='width=device-width, initial-scale=1, user-scalable=no')
+  link(rel='icon',href='/assets/lowgo.png', type='image/x-icon')
+  block title
+  meta(name='description', content='LowCode低代码社区是由在一线互联网企业深耕技术多年的技术专家创办，意在为企业技术人员提供低代码可视化相关的技术交流和分享，并且鼓励国内拥有相关业务的企业积极推荐自身产品，为国内B端技术领域积累知识资产。')
+  meta(name='keywords', content='lowcode,LowCode,低代码,可视化,nocode,editor,零代码,技术分享')
+  meta(name='author', content='lowcoder')
+  style
+    include ../includes/global.css
+    block style
+  include ../includes/scripts
+  script.
+    var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?f5c95734185c2b4af88c74d2d074eb52";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+    })();
+
+ body
+    if url === '/login' || url === '/registered'
+      block content
+    else
+      .header
+        a.logo.pri-color(href='/', title='lowcode可视化社区')
+          span lowcode可视化社区
+        .nav
+            each val in nav
+              .nav-item
+                a(
+                  href=val.link
+                  id=val.id
+                ) #{val.title}
+        .other
+          input(
+            class='search js_search'
+            placeholder='搜你所想'
+          )
+          div.searchResult
+          #writeBtn.join-btn.pri-color.br-color 我要入驻
+      block content
+      footer 
+        .site-help
+          .site-help-left
+            .site-item 
+              .site-item-tit 相关资源
+              a.site-item-link(href='https://github.com/MrXujiang/h5-Dooring', target='_blank') h5-dooring
+              a.site-item-link(href='https://github.com/taowen/awesome-lowcode', target='_blank') awesome-lowcode
+              a.site-item-link(href='http://v6.dooring.cn/beta', target='_blank') 可视化大屏编辑器
+              a.site-item-link(href='http://h5.dooring.cn/powernice', target='_blank') 在线文档编辑器
+            .site-item 
+              .site-item-tit 友情链接
+              a.site-item-link(href='https://www.helloworld.net', target='_blank') HelloWorld开发者社区
+              a.site-item-link(href='https://github.com/H5-Dooring', target='_blank') 可视化开发团队
+              a.site-item-link(href='https://youngjuning.js.org', target='_blank') 洛竹的博客
+            .site-item 
+              .site-item-tit 帮助
+              a.site-item-link(href='http://lowcode.dooring.cn/about', target='_blank') 关于我们
+          .site-help-right
+            .site-item 
+              .site-item-tit 微信公众号
+              img(src="http://cdn.dooring.cn/dr/qtqd_code.png")
+            .site-item 
+              .site-item-tit 小编微信
+              img(src="http://cdn.dooring.cn/dr/lowcode.jpeg")
+        .copyright
+          a(
+            href='https://beian.miit.gov.cn/'
+            target='_blank'
+          ) 鄂ICP备18024675号-4
+          a(
+            href='https://github.com/H5-Dooring'
+            target='_blank'
+          ) #{copyright}
+      script.
+        function debounce(func, wait) {
+          let timeout;
+          return function () {
+              let context = this;
+              let args = arguments;
+
+              if (timeout) clearTimeout(timeout);
+              
+              timeout = setTimeout(() => {
+                  func.apply(context, args)
+              }, wait);
+          }
+        }
+        function search(e) {
+          if(e.target.value) {
+            fetch('/api/v0/articles/all/public?q=' + decodeURIComponent(e.target.value),{
+              method: 'GET',
+              cache: 'no-cache',
+            }).then(res => res.json()).then(res => {
+              var data = res.result;
+              if(data.length) {
+                var str = '';
+                for(var i=0; i < data.length; i++) {
+                  str += "<div class='search-item'><a href='/best-practice/detail?fid=" + 
+                        data[i].fid + 
+                        "'>" + 
+                        data[i].title + 
+                        "</a><div>" +
+                        data[i].desc + 
+                        "</div></div>";
+                }
+                $('.searchResult').show().html(str);
+              }else {
+                $('.searchResult').hide().html('');
+              }
+            })
+          }else {
+            $('.searchResult').hide().html('');
+          }
+        }
+        $('.js_search').on('input propertychange', debounce(search, 300))
+        $('#writeBtn').click(function(){
+          window.open('http://h5.dooring.cn/h5?tid=8994C181')
+        })
+      //- 微信分享
+      script.
+        var wxShare = (obj, callback) => {
+            let url = window.location.href.split('#')[0]
+
+            if (obj) {
+                var title = !obj.title ? document.title : obj.title
+                var link = !obj.link ? window.location.href : obj.link
+                var desc = !obj.desc ? '一起来Lowcode可视化社区学习可视化技术吧' : obj.desc
+                var imgUrl = !obj.imgUrl ? 'http://lowcode.dooring.cn/assets/lowgo.png' : obj.imgUrl
+                var debug = obj.debug == true
+            } else {
+                alert('请传分享参数')
+            }
+
+            fetch('/api/v0/wechat/getConfig', {
+                body: JSON.stringify({ url: url }),
+                cache: 'no-cache',
+                headers: {
+                'content-type': 'application/json'
+                },
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                redirect: 'follow', // manual, *follow, error
+                referrer: 'no-referrer', 
+            })
+            .then(response => response.json()).then(res => {
+                let wxConf = res.result;
+                wx.config({
+                    debug: debug,
+                    appId: wxConf.appId,
+                    timestamp: wxConf.timestamp,
+                    nonceStr: wxConf.nonceStr,
+                    signature: wxConf.signature,
+                    jsApiList: wxConf.jsApiList
+                })
+                wx.ready(function () {
+                    wx.updateAppMessageShareData({
+                        title: title,
+                        desc: desc, 
+                        link: link, 
+                        imgUrl: imgUrl, 
+                        type: '',
+                        dataUrl: '',
+                        success: function () {
+                          callback && callback()
+                        }
+                    })
+                    wx.updateTimelineShareData({
+                        title: title,
+                        link: link,
+                        desc: desc,
+                        imgUrl: imgUrl,
+                        success: function () {
+                          callback && callback()
+                        }
+                    })
+                })
+            })
+        }
+        wxShare({})
+      

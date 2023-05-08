@@ -1,0 +1,107 @@
+extends ./layouts/default
+
+block title
+  title #{viewTitle} - lowcode低代码可视化社区
+
+block style
+  include ./includes/article_detail.css
+  include ./includes/tomorrow.css
+  include ./includes/editor.css
+
+block content
+  .viewContainer
+      .contentWidth
+        .viewTitle #{viewTitle}
+        .authorBox
+          .name 发布自: #{authorInfo.name}
+          .date 时间: #{authorInfo.date}
+          .views #{views}人围观
+        .cateBox
+          each val in cate
+            .cate #{val}
+        .editor-container
+          != val
+        .exceptional
+          .reward 
+            #like.like 
+              img(
+                src='/assets/emptyLike.png'
+                id='img_like'
+              )
+              span#newFlover #{flover || 0}
+            p 点个赞支持一下?
+        .commentBox
+          .title 评论
+          each val in commentInfoList
+            .commentInfo 
+              .commentPersonal
+                .name 游客#{val.id}
+              .commentContent #{val.text}
+              .commentReply(name=`@游客${val.id}`)
+                img(
+                  src='/assets/vector.svg'
+                )
+          .commentTextarea 
+            .avatar 
+              .avatarName 我要评论
+            .review
+              textarea(
+                placeholderNew="评论.."
+                class='inputBox'
+                id='js-textarea'
+              )
+              .operation
+                .operationArea
+                #commentButton.commentButton 评论
+
+  script.
+    const id = window.location.search.split('=')[1]
+    $('#reward').click(function(){
+      $('#img-reward').hide();
+    })
+
+     $('.commentReply').click(function(){
+      $('#js-textarea').focus()
+      $('#js-textarea').val($(this).attr('name'))
+    })
+
+    $('#like').click(function(){
+      $('#img_like').attr('src','/assets/like.svg');
+        fetch('/api/v0/note/flover/add',{
+          body: JSON.stringify({id: id}),
+          method: 'POST',
+          credentials: 'include',
+          cache: 'no-cache',
+          headers: {
+            'user-agent': 'Mozilla/4.0 MDN Example',
+            'content-type': 'application/json'
+          },
+           mode: 'cors'
+        }).then((res) => {
+          let floverValue = $('#newFlover').text()
+          $('#newFlover').text(Number(floverValue) + 1)
+          $('#like').css('pointer-events', 'none')
+        })
+      })
+
+    $('#commentButton').click(function(){
+        let textArea = $('#js-textarea').val()
+        if(textArea){
+          fetch('/api/v0/note/comment/save',{
+            body: JSON.stringify({id: id , comment: textArea}),
+            method: 'POST',
+            credentials: 'include',
+            cache: 'no-cache',
+            headers: {
+              'user-agent': 'Mozilla/4.0 MDN Example',
+              'content-type': 'application/json'
+            },
+            mode: 'cors'
+          }).then((res) => {
+            window.location.reload()
+          })
+        }else {
+          $('#js-textarea').css('border-color','#2f54eb')
+          $('#js-textarea').attr('placeholder',"评论不能为空...");
+        }
+      })

@@ -1,0 +1,59 @@
+extends ./layouts/default
+
+block title
+  title 技术手记-lowcode可视化社区
+
+block style
+  include ./includes/index.css
+
+block content
+  .container
+    .section-module
+      .title 手记
+        .btn.pri-bg-color.js_note_btn 写笔记
+      #articleList.section-list
+        each val in articles
+          a.section-item(href=`/note/detail?fid=${val.fid}`, target='_blank')
+            .imgWrap
+              img(src=val.face || '/assets/default.png')
+            .info
+              .title #{val.title}
+              .desc #{val.desc}
+      .controls
+          .btn.pri-bg-color.js_about_btn 加载更多
+    script. 
+      $('.js_note_btn').click(function(){
+        var isLogin = localStorage.getItem('name') && (localStorage.getItem('role') !== null)
+        if(isLogin) {
+          window.location.href = '/user/notes'
+        }
+        window.open('http://h5.dooring.cn/h5?tid=8994C181')
+      })
+    script. 
+      var curPage = 1;
+      var s = 6;
+      $('.js_about_btn').click(function(){
+        fetch('/api/v0/note/all/public?s=' + s + '&p=' + (curPage + 1), {
+              method: 'GET',
+              cache: 'no-cache',
+            }).then(res => res.json()).then(res => {
+              var data = res.result;
+              if(data.length) {
+                var str = '';
+                for(var i=0; i < data.length; i++) {
+                  str += "<a href='/best-practice/detail?fid=" + 
+                        data[i].fid + "' class='section-item' target='_blank'>" + 
+                        "<div class='imgWrap'><img src=" + (data[i].face || '/assets/default.png') + 
+                        " /></div>" + "<div class='info'><div class='title'>" + data[i].title +
+                        "</div><div class='desc'>" + data[i].desc + "</div></div>"
+                        "</a>";
+                }
+                $('#articleList').append(str)
+                if(data.length < 6) {
+                  $(this).hide()
+                  return
+                }
+                curPage++
+              }
+            })
+      })

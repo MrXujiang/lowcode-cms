@@ -1,0 +1,68 @@
+block header
+ #headerContainer.headerContainer
+    a.logo(href='/')
+      img(
+        src='/assets/logo.png'
+        class='logoImg'
+      )
+      span lowcode可视化社区
+    .category
+      .box
+        each val in nav
+          a(
+            href=val.link
+            id=val.id
+          ) #{val.cate}
+    .other
+      #writeBtn.button 我要入驻
+      input(
+        class='search js_search'
+        placeholder='Search'
+      )
+      .noticeBox 
+        .notice 
+        .avatar
+    
+    script.
+      const pathname = window.location.pathname.split('/')[1]
+      console.log(nav)
+      let css = {
+        color: '#333',
+        fontWeight: '600',
+      }
+      if(pathname){
+        $(`#${pathname}`).css(css)
+      }else {
+        $(`#home`).css(css)
+      }
+      $('#writeBtn').click(function(){
+        window.open('/admin');
+      })
+      //- $('.js_search').blur(function(e){
+      //-   window.location.href = window.location.pathname + '?keyword=' + e.target.value;
+      //- })
+      $(document).keyup(function(event){
+        if(event.keyCode ==13){
+          val = $(".js_search").val();
+          if(val){
+            let href = window.location.origin + '?keyword=' + event.target.value;
+            window.open(href)
+          }
+        }
+      });
+      var timer = null;
+      $(document).on("mousewheel DOMMouseScroll", function (e) {
+          if (e.originalEvent.wheelDeltaY > 10) {
+            $('#headerContainer').css('top','0')
+          } else if (e.originalEvent.wheelDeltaY < -10) {
+            $('#headerContainer').css('top','-60px')
+            if(!timer) {
+              timer = setTimeout(function(){
+                $('#headerContainer').css('top','0')
+                clearTimeout(timer)
+                timer = null
+              }, 3000)
+            }
+            
+          }
+      });
