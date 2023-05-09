@@ -42,6 +42,7 @@
   },
   "scripts": {
     "start": "export NODE_ENV=development && nodemon -w src --exec \"babel-node src\"",
+    "start:win": "set NODE_ENV=development&&nodemon -w src --exec \"babel-node src\"",
     "build": "babel src --out-dir dist",
     "run-build": "node dist",
     "test": "echo \"Error: no test specified\" && exit 1"
