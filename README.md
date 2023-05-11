@@ -5,6 +5,10 @@
 
 线上体验地址: http://www.lowcoder.cn/
 
+## 系统架构
+
+<img src="./lld.png" width="100%" />
+
 ### 目录介绍
 
 - server 基于nodejs的服务端, 启动后可直接访问`3000` 端口, 也就是内容SSR端
