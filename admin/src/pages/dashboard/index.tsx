@@ -37,6 +37,7 @@ export default function DashBoard() {
         </Row>
       </div>
       <div className={styles.content}>
+        <img src="http://cdn.dooring.cn/dr/qtqd_code.png" alt="徐小夕——趣谈前端公众号" width="120px" />
         <Empty text="今天又是充实的一天, 持续为着梦想加油!" />
       </div>
     </div>
